@@ -1,6 +1,17 @@
-import { Stack } from "expo-router";
-import '@/global.css';
+import "@/global.css";
+import { useAuth } from "@/lib/mock-auth";
+import { Redirect, Stack } from "expo-router";
 
-export default function RootLayout() {
-    return <Stack screenOptions={{ headerShown: false }} />;
+export default function AuthLayout() {
+  const { isSignedIn, isLoaded } = useAuth();
+
+  if (!isLoaded) {
+    return null;
+  }
+
+  if (isSignedIn) {
+    return <Redirect href="/(tabs)" />;
+  }
+
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
